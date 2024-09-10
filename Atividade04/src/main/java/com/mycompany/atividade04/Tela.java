@@ -264,14 +264,14 @@ public class Tela {
      {
          throw new CpfExeption();
      }
-   int dig12= cpf9dig.charAt(0);
-   int dig11= cpf9dig.charAt(1);
-   int dig10= cpf9dig.charAt(2);
-   int dig9= cpf9dig.charAt(3);
-   int dig8= cpf9dig.charAt(4);
-   int dig7= cpf9dig.charAt(5);
-   int dig6= cpf9dig.charAt(6);
-   int dig5= cpf9dig.charAt(7);
+   int dig11= cpf9dig.charAt(0);
+   int dig10= cpf9dig.charAt(1);
+   int dig9= cpf9dig.charAt(2);
+   int dig8= cpf9dig.charAt(3);
+   int dig7= cpf9dig.charAt(4);
+   int dig6= cpf9dig.charAt(5);
+   int dig5= cpf9dig.charAt(6);
+   int dig4= cpf9dig.charAt(7);
    int dig3= cpf9dig.charAt(8);
    if(Einteiro(cpfParte1[1])==false)
    {
@@ -279,6 +279,41 @@ public class Tela {
    }
    int dig2 = cpfverif[1].charAt(1);
    int dig1 = cpfverif[1].charAt(0);
+   int primeiraSomaprod;
+   primeiraSomaprod =((dig3+dig6+dig9)*2)+((dig4+dig7+dig10)*3)+((dig5+dig8+dig11)*4);
+   int resto1= primeiraSomaprod%11;
+   if(resto1 ==0||resto1==1)
+   {
+       if(dig2!=0)
+       {
+           throw new CpfExeption();
+       }
+   }
+   else
+   {
+       int verificador = 11-resto1;
+       if(dig2!=verificador)
+       {
+           throw new CpfExeption();
+       }
+   }
+    int segundaSomaprod=(dig2*2)+(dig3*3)+(dig4*4)+(dig5*5)+(dig6*6)+(dig7*7)+(dig8*8)+(dig9*9)+(dig10*10)+(dig11*11);
+    int resto2 = segundaSomaprod%11;
+    if(resto2 ==0||resto2==1)
+   {
+       if(dig1!=0)
+       {
+           throw new CpfExeption();
+       }
+   }
+   else
+   {
+       int verificador = 11-resto2;
+       if(dig1!=verificador)
+       {
+           throw new CpfExeption();
+       }
+   }
 }
      public boolean Einteiro (String a)
       {
