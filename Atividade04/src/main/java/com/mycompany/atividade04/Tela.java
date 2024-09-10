@@ -170,6 +170,9 @@ public class Tela {
     }
     public void AdicionaContato()
     {
+        JFrame MensagemErro = new JFrame("Erro");
+        MensagemErro.setSize(300,200);
+        MensagemErro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       String dia = data.getText();
       String diasemspaco =dia.trim();
       try{
@@ -177,7 +180,12 @@ public class Tela {
       }
       catch(DataExeption e)
       {
-          
+        JPanel panelErro = new JPanel();
+        panelErro.setLayout(new FlowLayout());
+        JLabel ErroFormato = new JLabel("Formato da Data de Nascimento incorreto!, utilize o formato DD/MM/AAAA");
+        panelErro.add(ErroFormato);
+        MensagemErro.add(panelErro);
+        MensagemErro.setVisible(true);
       }
       Datas.addElement(data.getText());
       ListaDatas = new JList(Datas);
@@ -190,19 +198,46 @@ public class Tela {
     
       
     }
-    public boolean verificadordia (String Dia)throws DataExeption
+    public void verificadordia (String Dia)throws DataExeption
     {
-        JFrame MensagemErro = new JFrame("Erro Data!");
-        MensagemErro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        MensagemErro.setSize(300,200);
-        JPanel panelErro = new JPanel();
+      
     if(Dia.length()!=8)
     {
-        JLabel ErroFormato = new JLabel("Formato incorreto!, utilize o formato DD/MM/AAAA");
-        return false;
+     throw new DataExeption();
+    }
+    char primeirabarra= Dia.charAt(2);
+    char segundabarra= Dia.charAt(5);
+    if(primeirabarra!='/'||segundabarra!='/')
+    {
+                System.out.println("Erro barra");
+        throw new DataExeption();
+    }
+  
+    String Datadividido[]=Dia.split("/");
+    String dia= Datadividido[0];
+    String mes= Datadividido[1];
+    String ano =Datadividido[2];
+    if(dia.length()!=2||mes.length()!=2||ano.length()!=2)
+    {
+        System.out.println("Erro tamanho");
+          throw new DataExeption();
+    }
+    int dia1 = dia.charAt(0)-48;
+    int dia2 = dia.charAt(1)-48;
+    int mes1 = mes.charAt(0)-48;
+    int mes2 = mes.charAt(1)-48;
+    int ano1 = ano.charAt(0)-48;
+    int ano2 = ano.charAt(1)-48;
+    int ano3 = ano.charAt(2)-48;
+    int ano4 = ano.charAt(3)-48;
+    int diaint = (dia1*10)+dia2;
+    int mesint = (mes1*10)+mes2;
+    int anoint = (ano1*1000)+(ano2*100)+(ano3*10)+(ano4);
+    if((diaint>30||diaint<1)&&(mesint>12&&mesint<1)&&anoint>2024)
+    {
+                System.out.println("Erro data");
+        throw new DataExeption();
     }
     
-    
-        return true;
     }
 }
