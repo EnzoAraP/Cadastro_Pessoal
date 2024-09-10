@@ -201,7 +201,7 @@ public class Tela {
     public void verificadordia (String Dia)throws DataExeption
     {
       
-    if(Dia.length()!=8)
+    if(Dia.length()!=10)
     {
      throw new DataExeption();
     }
@@ -209,7 +209,6 @@ public class Tela {
     char segundabarra= Dia.charAt(5);
     if(primeirabarra!='/'||segundabarra!='/')
     {
-                System.out.println("Erro barra");
         throw new DataExeption();
     }
   
@@ -217,7 +216,7 @@ public class Tela {
     String dia= Datadividido[0];
     String mes= Datadividido[1];
     String ano =Datadividido[2];
-    if(dia.length()!=2||mes.length()!=2||ano.length()!=2)
+    if(dia.length()!=2||mes.length()!=2||ano.length()!=4)
     {
         System.out.println("Erro tamanho");
           throw new DataExeption();
@@ -233,11 +232,64 @@ public class Tela {
     int diaint = (dia1*10)+dia2;
     int mesint = (mes1*10)+mes2;
     int anoint = (ano1*1000)+(ano2*100)+(ano3*10)+(ano4);
-    if((diaint>30||diaint<1)&&(mesint>12&&mesint<1)&&anoint>2024)
+    if((diaint>30||diaint<1)||(mesint>12||mesint<1)||anoint>2024||anoint<0)
     {
-                System.out.println("Erro data");
+            
         throw new DataExeption();
     }
     
     }
+    public void verificaorcpf(String Cpf) throws CpfExeption
+    {
+     if(Cpf.length()!=14)
+     {
+         throw new CpfExeption();
+    }
+    char primeiroponto=Cpf.charAt(3);
+    char segundoponto=Cpf.charAt(7);
+    char traco=Cpf.charAt(12);
+     if(primeiroponto!='.'||segundoponto!='.'||traco!='-')
+     {
+         throw new CpfExeption();
+     }
+     String cpfverif []=Cpf.split("-");
+     if(cpfverif[0].length()!=11||cpfverif[1].length()!=2)
+     {
+         throw new CpfExeption();
+     }
+     String cpfParte1[]=cpfverif[0].split("\\.");
+     String cpfparte0e1 =cpfParte1[0].concat(cpfParte1[1]);
+     String cpf9dig=cpfparte0e1.concat(cpfParte1[2]);
+     if(Einteiro(cpf9dig)==false)
+     {
+         throw new CpfExeption();
+     }
+   int dig12= cpf9dig.charAt(0);
+   int dig11= cpf9dig.charAt(1);
+   int dig10= cpf9dig.charAt(2);
+   int dig9= cpf9dig.charAt(3);
+   int dig8= cpf9dig.charAt(4);
+   int dig7= cpf9dig.charAt(5);
+   int dig6= cpf9dig.charAt(6);
+   int dig5= cpf9dig.charAt(7);
+   int dig3= cpf9dig.charAt(8);
+   if(Einteiro(cpfParte1[1])==false)
+   {
+       throw new CpfExeption();
+   }
+   int dig2 = cpfverif[1].charAt(1);
+   int dig1 = cpfverif[1].charAt(0);
+}
+     public boolean Einteiro (String a)
+      {
+         for(int i =0;i<a.length();i++)
+                 {
+                 if('0'<a.charAt(i)||a.charAt(i)>'9')
+                 {
+                     return false;
+                 }
+                 }
+          
+return true;
+      }
 }
