@@ -5,18 +5,27 @@
 package com.mycompany.atividade04;
 import javax.swing.*;
 import java.awt.*;
+import com.mycompany.atividade04.Botoes.*;
+import com.mycompany.atividade04.Execeptions.*;
 /**
  *
  * @author Nitro 5
  */
 public class Tela {
     private JFrame tela;
-    private final int WIDTH = 600;
-    private final int HEIGHT = 400;
+    private final int WIDTH = 700;
+    private final int HEIGHT = 500;
     private JList<String> ListaNomes;
     private JList<String> ListaCpf;
     private JList<String> ListaDatas;
     private JList<String> ListaIdades;
+    private JTextField nome;
+    private JTextField data;
+    private JTextField cpf;
+    private DefaultListModel<String> Nomes = new DefaultListModel<>();
+    private  DefaultListModel<String> Datas = new DefaultListModel<>();
+    private DefaultListModel<String> Cpf = new DefaultListModel<>();
+     private DefaultListModel<String> Idades = new DefaultListModel<>();
     public void TelaJF (){
         tela = new JFrame("Formulario");
         tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,11 +38,11 @@ public class Tela {
     }
     public void paneladicionador(){
         JPanel panel = new JPanel();
-        JTextField nome=new JTextField(20);
+        nome=new JTextField(20);
         JLabel nomeJL = new JLabel("Nome");
-        JTextField data=new JTextField(20);
+         data=new JTextField(20);
          JLabel dataJL = new JLabel("Data");
-        JTextField cpf=new JTextField(20);
+         cpf=new JTextField(20);
          JLabel cpfJL = new JLabel("Cpf");
         JButton adicionar = new JButton("Adicionar");
         JButton remover = new JButton("Remover");
@@ -85,6 +94,7 @@ public class Tela {
         constraints.gridheight = 1; 
         constraints.insets = new Insets(5, 5, 5, 5); // Padding
         panel.add(adicionar, constraints);
+        adicionar.addActionListener(new BotaoAdd(this));
             }
             {//remover
         constraints.gridx = 1; // Grid column
@@ -106,64 +116,93 @@ public class Tela {
       JLabel dataJL = new JLabel("Data de Nascimento ");
       JLabel idadeJL = new JLabel("Idade");
       JLabel cpfJL = new JLabel("Cpf");
-       DefaultListModel<String> Nomes = new DefaultListModel<>();
-       Nomes.addElement("Enzo");
-       Nomes.addElement("Julia");
        ListaNomes = new JList(Nomes);
-        DefaultListModel<String> Datas = new DefaultListModel<>();
-        Datas.addElement("21/07/2003");
-        Datas.addElement("12/05/2004");
        ListaDatas = new JList(Datas);
-        DefaultListModel<String> Cpf = new DefaultListModel<>();
-        Cpf.addElement("13312331");
-        Cpf.addElement("133146731");
        ListaCpf = new JList(Cpf);
-        DefaultListModel<String> Idades = new DefaultListModel<>();
-        Idades.addElement("19 Anos");
-        Idades.addElement("18 Anos");
        ListaIdades = new JList(Idades);
       GridBagConstraints constraints = new GridBagConstraints();
        {//Nome Label
         constraints.gridx = 0; // Grid column
         constraints.gridy = 0; // Grid row
-        constraints.gridwidth = 1; 
+        constraints.gridwidth = 2; 
         constraints.gridheight = 1; 
         constraints.insets = new Insets(10, 10, 10, 10); // Padding
         panel.add(nomeJL, constraints);
      
         }
        {// data Label
-           constraints.gridx = 1; // Grid column
+           constraints.gridx = 2; // Grid column
+           constraints.gridwidth = 1; 
            panel.add(dataJL, constraints);
+           
        }
        {//idade Label
-            constraints.gridx = 2; // Grid column
+            constraints.gridx = 3; // Grid column
            panel.add(idadeJL, constraints);
        }
        {//cpf Label
-            constraints.gridx = 3; // Grid column
+            constraints.gridx = 4; // Grid column
            panel.add(cpfJL, constraints);
        }
        {//Nome List
            constraints.gridx = 0; // Grid column
            constraints.gridy = 1; // Grid row
+           constraints.gridwidth = 2; 
            panel.add(ListaNomes, constraints);
        }
        {//Data List
-           constraints.gridx = 1; // Grid column
+           constraints.gridx = 2; // Grid column
+           constraints.gridwidth = 1; 
            
            panel.add(ListaDatas, constraints);
        }
        {//Idade List
-           constraints.gridx = 2; // Grid column
+           constraints.gridx = 3; // Grid column
           
            panel.add(ListaIdades, constraints);
        }
        {//Cpf List
-           constraints.gridx = 3; // Grid column
+           constraints.gridx = 4; // Grid column
            
            panel.add(ListaCpf, constraints);
        }
        tela.add(panel);
+    }
+    public void AdicionaContato()
+    {
+      String dia = data.getText();
+      String diasemspaco =dia.trim();
+      try{
+      verificadordia(diasemspaco);
+      }
+      catch(DataExeption e)
+      {
+          
+      }
+      Datas.addElement(data.getText());
+      ListaDatas = new JList(Datas);
+     Nomes.addElement(nome.getText());
+     ListaNomes = new JList(Nomes);
+  
+     
+     Cpf.addElement(cpf.getText());
+     ListaCpf= new JList (Cpf);
+    
+      
+    }
+    public boolean verificadordia (String Dia)throws DataExeption
+    {
+        JFrame MensagemErro = new JFrame("Erro Data!");
+        MensagemErro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        MensagemErro.setSize(300,200);
+        JPanel panelErro = new JPanel();
+    if(Dia.length()!=8)
+    {
+        JLabel ErroFormato = new JLabel("Formato incorreto!, utilize o formato DD/MM/AAAA");
+        return false;
+    }
+    
+    
+        return true;
     }
 }
