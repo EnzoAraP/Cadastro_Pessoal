@@ -12,15 +12,16 @@ import java.awt.event.ActionListener;
  *
  * @author Nitro 5
  */
-public class BotaoRemover implements ActionListener {
-    private Tela telao;
-   public BotaoRemover(Tela receptor)
+public class BotaoEditar implements ActionListener  {
+    
+     private Tela telao;
+   public BotaoEditar(Tela receptor)
     {
         telao = receptor;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
       
-      telao.RemoveContato();
-    } 
+      telao.AdicionaContato();
+    }
 }

@@ -99,6 +99,7 @@ public class Tela {
             {//remover
         constraints.gridx = 1; // Grid column
         panel.add(remover, constraints);
+        remover.addActionListener(new BotaoRemover(this));
             }
             {//editar
         constraints.gridx = 2; // Grid column
@@ -120,6 +121,7 @@ public class Tela {
        ListaDatas = new JList(Datas);
        ListaCpf = new JList(Cpf);
        ListaIdades = new JList(Idades);
+      
       GridBagConstraints constraints = new GridBagConstraints();
        {//Nome Label
         constraints.gridx = 0; // Grid column
@@ -208,13 +210,13 @@ public class Tela {
      } else {
          Integer idade = PegaAno(data.getText());
          Idades.addElement(idade);
-         ListaIdades = new JList(Idades);
+         
          Datas.addElement(data.getText());
-         ListaDatas = new JList(Datas);
+        ;
          Nomes.addElement(nome.getText());
-         ListaNomes = new JList(Nomes);
+         
          Cpf.addElement(cpf.getText());
-         ListaCpf= new JList (Cpf);
+       
         }
       
     }
@@ -361,5 +363,46 @@ return true;
      }
      public void RemoveContato()
      {
+         JFrame MensagemErro = new JFrame("Erro");
+         MensagemErro.setSize(300,200);
+        MensagemErro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JPanel panelErro= new JPanel();
+        panelErro.setLayout(new FlowLayout());
+         
+         int selectedIndex =ListaNomes.getSelectedIndex();
+         System.out.println("Valor Lista Nomes 0: "+ Nomes.getElementAt(0));
+         System.out.println("Valor de selectedIndex: "+selectedIndex);
+         
+                if(selectedIndex ==-1)
+                {
+                  
+                    JLabel mensagem = new JLabel("Selecione algum Nome que queira remover!");
+                    panelErro.add(mensagem);
+                    MensagemErro.add(panelErro);
+                    MensagemErro.setVisible(true);
+                    
+                    
+                }
+                if(selectedIndex != -1)
+                {
+                    Nomes.remove(selectedIndex);
+                    Cpf.remove(selectedIndex);
+                    Idades.remove(selectedIndex);
+                    Datas.remove(selectedIndex);
+                }
+                
      }
-}
+     public void EditarContato()
+     {
+         
+     }
+     public void atualizarFormulario()
+     {
+         
+         nome= new JTextField();
+
+          
+
+        }
+     }
+
