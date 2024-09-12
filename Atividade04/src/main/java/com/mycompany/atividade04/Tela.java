@@ -103,7 +103,8 @@ public class Tela {
             }
             {//editar
         constraints.gridx = 2; // Grid column
-        panel.add(editar, constraints);        
+        panel.add(editar, constraints);    
+        editar.addActionListener(new BotaoEditar(this));
             }
             
             
@@ -118,6 +119,7 @@ public class Tela {
       JLabel idadeJL = new JLabel("Idade");
       JLabel cpfJL = new JLabel("Cpf");
        ListaNomes = new JList(Nomes);
+       ListaNomes.addListSelectionListener(new SelecionarNome(this));
        ListaDatas = new JList(Datas);
        ListaCpf = new JList(Cpf);
        ListaIdades = new JList(Idades);
@@ -212,7 +214,6 @@ public class Tela {
          Idades.addElement(idade);
          
          Datas.addElement(data.getText());
-        ;
          Nomes.addElement(nome.getText());
          
          Cpf.addElement(cpf.getText());
@@ -394,15 +395,85 @@ return true;
      }
      public void EditarContato()
      {
+        JFrame MensagemErro = new JFrame("Erro");
+        MensagemErro.setSize(300,200);
+        MensagemErro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JPanel panelErro= new JPanel();
+        panelErro.setLayout(new FlowLayout());
+         int selectedIndex =ListaNomes.getSelectedIndex();
+         int erro=0;
+        
+                     if(selectedIndex ==-1)
+                {
+                  
+                    JLabel mensagem = new JLabel("Selecione algum Nome que queira editar!");
+                    panelErro.add(mensagem);
+                    MensagemErro.add(panelErro);
+                    MensagemErro.setVisible(true);
+                    
+                    
+                }
+                if(selectedIndex != -1)
+                {
+                     String dia = data.getText();
+      String diasemspaco =dia.trim();
+                try{
+      verificadordia(diasemspaco);
+      }
+      catch(DataExeption e)
+      {
+       
+        JLabel ErroFormato = new JLabel("Formato da Data de Nascimento incorreto!, utilize o formato DD/MM/AAAA");
+        panelErro.add(ErroFormato);
+        MensagemErro.add(panelErro);
+        MensagemErro.setVisible(true);
+        erro++;
+      }
+    String cpfantes=cpf.getText();
+    String cpfsemspaco=cpfantes.trim();
+     try{
+         verificaorcpf(cpfsemspaco);
          
      }
-     public void atualizarFormulario()
+     catch(CpfExeption e)
      {
+         JLabel ErroFormato = new JLabel("Cpf incorreto!, utilize o formato DDD.DDD.DDD-DD");
+        panelErro.add(ErroFormato);
+        MensagemErro.add(panelErro);
+        MensagemErro.setVisible(true);
+        erro++;
+     }
+     if(erro!=0){
+     } else {
+         Integer idade = PegaAno(data.getText());
+         Idades.set(selectedIndex,idade );
          
-         nome= new JTextField();
-
-          
+         Datas.set(selectedIndex,data.getText() );
+        
+          Nomes.set(selectedIndex,nome.getText() );
+         
+          Cpf.set(selectedIndex,cpf.getText() );
+       
+        }
+        
+                }
 
         }
-     }
+     
+     
+     public void atualizarFormulario()
+     {
+        int selectedIndex =ListaNomes.getSelectedIndex();
+        
+                if(selectedIndex != -1)
+                {
+                 nome.setText(Nomes.elementAt(selectedIndex));
+                 data.setText(Datas.elementAt(selectedIndex));
+                 cpf.setText(Cpf.elementAt(selectedIndex));
+                }
+
+        
+}
+}
+     
 

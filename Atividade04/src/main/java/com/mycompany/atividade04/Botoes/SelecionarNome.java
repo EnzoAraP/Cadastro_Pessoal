@@ -5,23 +5,22 @@
 package com.mycompany.atividade04.Botoes;
 
 import com.mycompany.atividade04.Tela;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author Nitro 5
  */
-public class BotaoEditar implements ActionListener  {
-    
+public class SelecionarNome implements ListSelectionListener{
      private Tela telao;
-   public BotaoEditar(Tela receptor)
+   public SelecionarNome(Tela receptor)
     {
         telao = receptor;
     }
+
     @Override
-    public void actionPerformed(ActionEvent e) {
-      
-      telao.EditarContato();
+    public void valueChanged(ListSelectionEvent e) {
+        telao.atualizarFormulario();
     }
 }
